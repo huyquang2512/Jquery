@@ -51,3 +51,21 @@ html {
 link {
     display: none;
 }
+footer{
+    width: 100%;
+    min-height: 10vh;
+    background-color: #342c75;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+.box{
+    width: 30%;
+    background-color: #342c75;
+    margin: 0.5%;
+    color: white;
+    border: white solid;
+    border-radius: 10px;
+}

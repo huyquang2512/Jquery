@@ -9,16 +9,20 @@
 
         <link rel="canonical"
             href="https://getbootstrap.com/docs/4.0/examples/dashboard/">
+            <link rel="stylesheet" href="https://code.jquery.com/jquery-3.5.1.js">
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js">
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
             crossorigin="anonymous">
-            <!-- datatable -->
-   
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-            <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-            <script src="js.js"></script>
+        <!-- datatable -->
+<link href="css.css" rel="stylesheet">   
+        <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script type="text/javascript"
+            src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="js.js"></script>
 
 
 
@@ -241,20 +245,16 @@
                         <div class="btn-toolbar mb-2 mb-md-0">
                             <div class="btn-group mr-2">
                                 <button class="btn btn-sm
-                                    btn-outline-secondary" onclick="clear()">Clear</button>
+                                    btn-outline-secondary"
+                                    onclick="clearform()">Clear</button>
                                 <button class="btn btn-sm
-                                    btn-outline-secondary">Save</button>
+                                    btn-outline-secondary" onclick="saveFunction()">Save</button>
                                 <button class="btn btn-sm
                                     btn-outline-secondary">Search</button>
                             </div>
                         </div>
                     </div>
-
-
-                    <!-- Start -->
-
-
-                    <div class="container-responsive"">
+                    <div class="container-responsive">
                         <!-- Search -->
                         <div class="card">
                             <div class="card search">
@@ -315,7 +315,7 @@
                                                         class="form-control
                                                         search-box"
                                                         data-column-index='0'
-                                                        id="searchId">
+                                                        id="name" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -329,7 +329,7 @@
                                                         class="form-control
                                                         search-box"
                                                         data-column-index='1'
-                                                        id="searchName">
+                                                        id="pos" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -346,7 +346,7 @@
                                                         class="form-control
                                                         search-box"
                                                         data-column-index='0'
-                                                        id="searchId">
+                                                        id="salary" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -360,7 +360,7 @@
                                                         class="form-control
                                                         search-box"
                                                         data-column-index='1'
-                                                        id="searchName">
+                                                        id="date" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -377,7 +377,7 @@
                                                         class="form-control
                                                         search-box"
                                                         data-column-index='0'
-                                                        id="searchId">
+                                                        id="off" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -391,7 +391,7 @@
                                                         class="form-control
                                                         search-box"
                                                         data-column-index='1'
-                                                        id="searchName">
+                                                        id="extn" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -406,35 +406,131 @@
                         <table class="table table-striped table-sm" id="table3">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Postion</th>
-                                    <th>Salary</th>
-                                    <th>Date</th>
-                                    <th>Office</th>
-                                    <th>Extn</th>
+                                    <th scope="col">id</th>
+                                    <th scope="col">name</th>
+                                    <th scope="col">position</th>
+                                    <th scope="col">salary</th>
+                                    <th scope="col">start_date</th>
+                                    <th scope="col">office</th>
+                                    <th scope="col">extn</th>
+                                    <th scope="col">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
-                              
                             </tbody>
                         </table>
                     </div>
                 </main>
             </div>
         </div>
+        <footer>
+            <button class="box">F1</button>
+            <button class="box">F2</button>
+            <button class="box">F3<br/>Search</button>
+            <button class="box">F4</button>
+            <button class="box">F5<br/>Clear</button>
+            <button class="box">F6</button>
+            <button class="box">F7</button>
+            <button class="box">F8</button>
+            <button class="box">F9</button>
+            <button class="box">F10<br/>Save</button>
+            <button class="box">F11</button>
+            <button class="box">F12</button>
+        </footer>
         <script>
-            $('#table3').DataTable({
-                "data": dataJson.users,
-                "columns": [
-                    { "data": 'id' },
-                    { "data": 'name' },
-                    { "data": 'position' },
-                    { "data": 'salary' },
-                    { "data": 'start_date' },
-                    { "data": 'office' },
-                    { "data": 'extn' }
-                ],
-            });
+          var table = null;
+$(document).ready(function () {
+  //#region  loadTable
+  table = $('#table3').DataTable({
+    columnDefs: [{
+      targets: [3, 6], type: "dom-text", render: function (data, type, row, meta) {
+        return "<input type='text' value='" + data + "' class='form-control'>";
+      }
+    },{
+      targets: [1], type: "dom-text", render: function (data) {
+        return "<th>"+data+"</th>";
+      }
+    },
+    {
+      targets: [0], type: "dom-text", render: function (data) {
+        return "<th>"+data+"</th>";
+      }
+    },
+    {
+      targets: [2], render: function (data) {
+        return position(data);
+      }
+    },
+    {
+      targets: [5], render: function (data) {
+        return office(data);
+      }
+    },
+    {
+      targets: [4], type: "dom-text", render: function (data) {
+        return "<input type='date' value='" + data + "' class='form-control'>";
+      }
+    },
+    {
+      targets: [7], type: "dom-text", render: function (data) {
+        return "<input type='button' value='Delete' id='btn_delete' class='btn btn-danger' onClick='deleteFunction()'/>";
+      }
+    },
+    ],
+    searching: false,
+    paging: false,
+    "data": dataJson.users,
+    "columns": [
+      { "data": "id" },
+      { "data": "name" },
+      { "data": "position" },
+      { "data": "salary" },
+      { "data": "start_date" },
+      { "data": "office" },
+      { "data": "extn" },
+      { "data": "null" }
+    ]
+  });
+});
+  function deleteFunction() {
+  $('#btn_delete').closest("tr").remove();
+}
+  function position(item) {
+  var temp = "<select class='form-control'>";
+  $.each(dataJson.positions, function () {
+    if (this.id == item) {
+        temp += "<option selected value = '" + this.id + "' >" + this.name + "</option>";
+    }
+    else temp += "<option  value = '" + this.id + "' >" + this.name + "</option>";
+  });
+  temp += "</select>";
+  return temp;
+}
+  function office(item) {
+  var temp = "<select class='form-control'>";
+  $.each(dataJson.offices, function () {
+    if (this.id == item) {
+        temp += "<option selected value = '" + this.id + "' >" + this.name + "</option>";
+    }
+    else temp += "<option  value = '" + this.id + "' >" + this.name + "</option>";
+  });
+  temp += "</select>";
+
+  return temp;
+}
+function saveFunction() {
+  var data = table.rows().data();
+  console.log(data);
+}
+            function clearform() {
+                document.getElementById('searchId').value = "";
+                document.getElementById('searchName').value = "";
+                document.getElementById('name').value = "";
+                document.getElementById('pos').value = "";
+                document.getElementById('salary').value = "";
+                document.getElementById('date').value = "";
+                document.getElementById('off').value = "";
+                document.getElementById('extn').value = "";
+            }
         </script>
     </body></html>
