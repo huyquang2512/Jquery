@@ -247,10 +247,10 @@
                             <div class="btn-group mr-2">
                                 <button class="btn btn-sm
                                     btn-outline-secondary"
-                                    onclick="clearform()">Clear</button>
+                                    onclick="tai_lai_trang()">Clear</button>
                                 <button class="btn btn-sm
                                     btn-outline-secondary"
-                                    onclick="saveFunction()">Save</button>
+                                    onclick="save()">Save</button>
                                 <button class="btn btn-sm
                                     btn-outline-secondary">Search</button>
                             </div>
@@ -429,20 +429,18 @@
             <button class="box">F1</button>
             <button class="box">F2</button>
             <button class="box">F3<br/>Search</button>
-                <button class="box">F4</button>
-                <button class="box">F5<br/>Clear</button>
-                    <button class="box">F6</button>
-                    <button class="box">F7</button>
-                    <button class="box">F8</button>
-                    <button class="box">F9</button>
-                    <button class="box">F10<br/>Save</button>
-                        <button class="box">F11</button>
-                        <button class="box">F12</button>
-                    </footer>
-                    <script>
-          var table = null;
+            <button class="box">F4</button>
+            <button class="box">F5<br/>Clear</button>
+            <button class="box">F6</button>
+            <button class="box">F7</button>
+            <button class="box">F8</button>
+            <button class="box">F9</button>
+            <button class="box">F10<br/>Save</button>
+            <button class="box">F11</button>
+            <button class="box">F12</button>
+        </footer>
+<script>
 $(document).ready(function () {
-  //#region  loadTable
   table = $('#table3').DataTable({
     columnDefs: [{
       targets: [3, 6], type: "dom-text", render: function (data, type, row, meta) {
@@ -493,6 +491,7 @@ $(document).ready(function () {
       { "data": "null" }
     ]
   });
+
 });
   function deleteFunction() {
   $('#btn_delete').closest("tr").remove();
@@ -520,19 +519,33 @@ $(document).ready(function () {
 
   return temp;
 }
-function saveFunction() {
+function save() {
   var data = table.rows().data();
   console.log(data);
+  alert('Đã in ra console');
 }
-            function clearform() {
-                document.getElementById('searchId').value = "";
-                document.getElementById('searchName').value = "";
-                document.getElementById('name').value = "";
-                document.getElementById('pos').value = "";
-                document.getElementById('salary').value = "";
-                document.getElementById('date').value = "";
-                document.getElementById('off').value = "";
-                document.getElementById('extn').value = "";
-            }
-        </script>
-                </body></html>
+//Detail
+      $('#table3').on('click', 'tr', function () {
+      var data = table.row(this).data();
+      $("#name").val(data.id);
+      $("#pos").val(data.position);
+      $("#salary").val(data.salary);
+      $("#date").val(data.start_date);
+      $("#off").val(data.office);
+      $("#extn").val(data.extn);
+  });
+  function tai_lai_trang(){
+            location.reload();
+  }
+  function search() {
+//   var id = $('#searchId').val();
+//   var name = $('#searchName').val();
+//   var data = table.row(this).data();
+//   console.log("aaaaaaaaa");
+//   if(id == data.id){
+//       console.log("aaaaaaaaa");
+//   }
+};
+</script>
+     </body>
+</html>
